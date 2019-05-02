@@ -61,10 +61,10 @@ public class TestSwing {
  */
 class GUI {
 
-  // Instance variables below - mostly Swing components for the UI  
+  // Instance variables below - mostly Swing components for the UI
   private JFrame frame; // this is the actual window
   private JPanel panel; // a panel is a surface to put other components on
-  private JPanel form;  
+  private JPanel form;
   private JTable table; // A table which looks like a spread sheet, kind of
   private JTextField alcoField; // input fields
   private JTextField priceField;
@@ -83,7 +83,7 @@ class GUI {
 
   /* This sets up all the components.
    */
-  private void init() {    
+  private void init() {
     frame = new JFrame("Testing swing table");
     frame.setLayout(new BorderLayout());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,7 +91,7 @@ class GUI {
     form = new JPanel(new GridLayout(2,2));
     table = new JTable(new ProductTableModel(products));
     sorter = new TableRowSorter<ProductTableModel>((ProductTableModel)table.getModel());
-    table.setPreferredScrollableViewportSize(new Dimension(1600, 1600));
+    table.setPreferredScrollableViewportSize(new Dimension(1600, 800));
     table.setFillsViewportHeight(true);
     table.setRowHeight(30);
     table.setAutoCreateRowSorter(true);
@@ -126,7 +126,7 @@ class GUI {
           public void removeUpdate(DocumentEvent e) {
             newFilter();
           }
-        });    
+        });
     priceField.getDocument()
       .addDocumentListener(new DocumentListener() {
           public void changedUpdate(DocumentEvent e) {
@@ -138,7 +138,7 @@ class GUI {
           public void removeUpdate(DocumentEvent e) {
             newFilter();
           }
-        });    
+        });
   }
   // Resets and updates the filter depending on what the
   // user writes in the text fields
@@ -158,7 +158,7 @@ class GUI {
                 .numberFilter(RowFilter.ComparisonType.BEFORE,
                               Double.parseDouble(priceField.getText()),2));
       }
-      
+
     } catch (Exception e) {
       return;
     }
@@ -179,7 +179,7 @@ class GUI {
 class ProductTableModel extends AbstractTableModel {
   private String[] columnNames = { "Name", "Alcohol", "Price", "Volume", "cl alc per SEK"};
   private Object[][] data;
-  
+
   public ProductTableModel(List<Product> products) {
     data = new Object[products.size()][5];
     for (int i=0; i<products.size(); i++) {
