@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  */
 public class XMLBasedProductLine implements ProductLine {
 
-  static String XML_FILE = "resources/sortiment.xml";
+  static String XML_FILE = "src/main/resources/sortiment.xml";
   static {
     String file = System.getProperty("sortiment-xml-file");
     if (file != null) {
