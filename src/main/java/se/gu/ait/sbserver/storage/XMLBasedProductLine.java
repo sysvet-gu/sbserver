@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import org.apache.commons.io.FileUtils;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * <p>An implementation of ProuctLine which parses a local
@@ -33,13 +39,11 @@ import java.util.stream.Collectors;
  */
 public class XMLBasedProductLine implements ProductLine {
 
-  static String XML_FILE = "src/main/resources/sortiment.xml";
-  static {
-    String file = System.getProperty("sortiment-xml-file");
-    if (file != null) {
-      XML_FILE = file;
-    }
-  }
+  static String datePattern = "yyyyMMdd";
+  static SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+  static String fromFile = "https://www.systembolaget.se/api/assortment/products/xml";
+
+
   static final String PRODUCT = "artikel";
   static final String NAME = "Namn";
   static final String NAME2 = "Namn2";
@@ -50,6 +54,9 @@ public class XMLBasedProductLine implements ProductLine {
   static final String NR = "nr";
   static final String PRODUCT_GROUP = "Varugrupp";
   static final String TYPE = "Typ";
+
+  private String xmlFile = "src/main/resources/" + dateFormat.format(new Date()) + ".xml";;
+  private File tmpFile;
 
   private List<Product> products;
 
@@ -70,11 +77,23 @@ public class XMLBasedProductLine implements ProductLine {
     return products;
   }
 
+  private void getXMLFile() {
+    tmpFile = new File(xmlFile);
+    if (!tmpFile.exists()) {
+      try{
+        FileUtils.copyURLToFile(new URL(fromFile), new File(xmlFile), 10000, 10000);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   private void readProductsFromFile() {
     products = new ArrayList<>();
+    getXMLFile();
     try {
       XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-      InputStream in = new FileInputStream(XML_FILE);
+      InputStream in = new FileInputStream(xmlFile);
       XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 
       String name = null;
