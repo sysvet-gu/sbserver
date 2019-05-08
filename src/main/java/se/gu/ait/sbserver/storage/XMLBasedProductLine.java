@@ -55,7 +55,7 @@ public class XMLBasedProductLine implements ProductLine {
   static final String PRODUCT_GROUP = "Varugrupp";
   static final String TYPE = "Typ";
 
-  private String xmlFile = "src/main/resources/" + dateFormat.format(new Date()) + ".xml";
+  private String xmlFile;
   private File tmpFile;
 
   private List<Product> products;
@@ -77,7 +77,13 @@ public class XMLBasedProductLine implements ProductLine {
     return products;
   }
 
-  private void getXMLFile() {
+  private void getXMLFile(){
+    getXMLFile(new Date());
+  }
+
+
+  private void getXMLFile(Date date) {
+    xmlFile = "src/main/resources/" + dateFormat.format(date) + ".xml";
     tmpFile = new File(xmlFile);
     if (!tmpFile.exists()) {
       try{
