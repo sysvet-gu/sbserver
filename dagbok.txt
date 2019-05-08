@@ -1,1 +1,11 @@
-Vi har gjort grejer.
+2019-05-07
+
+Idag satt vi och arbetade med koden för projektet. Vi nådde fram till en lösning på vår första "milestone"
+("Vilka produkter finns idag?") Vilket var en av kriterierna på vad vår kod skulle kunna visa.
+Här fixade vi också kod för att kunna hämta ner en dagsfärsk lista från bolaget med hjälp av en metod.
+
+Vi kom gemensamt fram till att göra "enkla lösningar" på våra uppgifter. Detta innebär att den koden vi utvecklar inte skulle vara hållbar i framtiden. (mycket pga storlek på filer etc..)
+
+2019-05-08
+
+Handledarmöte. Vi filar på rapporten och fortsätter utvecklingen av projektet och planeringen i vår kanban.
