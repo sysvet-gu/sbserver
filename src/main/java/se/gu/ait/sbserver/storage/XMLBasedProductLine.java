@@ -77,7 +77,7 @@ public class XMLBasedProductLine implements ProductLine {
     return products;
   }
 
-  private void getXMLFile(){
+  private void getXMLFile() {
     getXMLFile(new Date());
   }
 
@@ -86,7 +86,7 @@ public class XMLBasedProductLine implements ProductLine {
     xmlFile = "src/main/resources/" + dateFormat.format(date) + ".xml";
     tmpFile = new File(xmlFile);
     if (!tmpFile.exists()) {
-      try{
+      try {
         FileUtils.copyURLToFile(new URL(fromFile), new File(xmlFile), 10000, 10000);
       } catch (IOException e) {
         e.printStackTrace();
