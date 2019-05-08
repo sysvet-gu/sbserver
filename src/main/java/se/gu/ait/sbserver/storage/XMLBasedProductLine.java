@@ -64,16 +64,12 @@ public class XMLBasedProductLine implements ProductLine {
   XMLBasedProductLine() { }
 
   public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
-    if (products == null) {
-      readProductsFromFile();
-    }
+    readProductsFromFile();
     return products.stream().filter(predicate).collect(Collectors.toList());
   }
 
   public List<Product> getAllProducts() {
-    if (products == null) {
-      readProductsFromFile();
-    }
+    readProductsFromFile();
     return products;
   }
 
@@ -83,7 +79,7 @@ public class XMLBasedProductLine implements ProductLine {
 
 
   private void getXMLFile(Date date) {
-    xmlFile = "src/main/resources/" + dateFormat.format(date) + ".xml";
+    xmlFile = "src/main/resources/systembolaget/" + dateFormat.format(date) + "/products.xml";
     tmpFile = new File(xmlFile);
     if (!tmpFile.exists()) {
       try {
