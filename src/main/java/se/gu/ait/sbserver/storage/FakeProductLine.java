@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.Date;
 
 /**
  * <p>An implementation of ProuctLine which fakes some hard coded products.</p>
@@ -16,21 +17,25 @@ public class FakeProductLine implements ProductLine {
 
   // Prevent instantiation from outside this package
   FakeProductLine() { }
-  
+
   public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
-    if (products == null) {      
+    if (products == null) {
       //createFakeProducts();
       createFakeProductsFromCSV();
     }
     return products.stream().filter(predicate).collect(Collectors.toList());
   }
-  
+
   public List<Product> getAllProducts() {
     if (products == null) {
       //createFakeProducts();
       createFakeProductsFromCSV();
     }
     return products;
+  }
+
+  public List<Product> getAllProducts(Date date){
+    return getAllProducts();
   }
 
   private Product getFakeProduct(String name, String price,
@@ -48,7 +53,7 @@ public class FakeProductLine implements ProductLine {
       .productGroup(productGroup)
       .type(type)
       .build();
-    
+
   }
 
   // Set the products list by calling the helper
@@ -85,5 +90,5 @@ public class FakeProductLine implements ProductLine {
     products.add(getFakeProduct("Abrigo Giovanni Piemonte Mix 1","732.0","13.5","4500","7096809","Rött vin",""));
     //products.add(getFakeProduct("", "", "", "", "", "", "", "");
   }
-  
+
 }

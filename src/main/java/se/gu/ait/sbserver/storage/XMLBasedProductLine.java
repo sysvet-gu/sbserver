@@ -63,20 +63,27 @@ public class XMLBasedProductLine implements ProductLine {
   // Prevent instantiation from outside this package
   XMLBasedProductLine() { }
 
-  public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
-    readProductsFromFile();
+  public List<Product> getProductsFilteredBy(Predicate<Product> predicate, Date date) {
+    readProductsFromFile(date);
     return products.stream().filter(predicate).collect(Collectors.toList());
   }
 
-  public List<Product> getAllProducts() {
-    readProductsFromFile();
+  public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
+    return getProductsFilteredBy(predicate, new Date());
+  }
+
+  public List<Product> getAllProducts(Date date) {
+    readProductsFromFile(date);
     return products;
+  }
+
+  public List<Product> getAllProducts() {
+    return getAllProducts(new Date());
   }
 
   private void getXMLFile() {
     getXMLFile(new Date());
   }
-
 
   private void getXMLFile(Date date) {
     xmlFile = "src/main/resources/systembolaget/" + dateFormat.format(date) + "/products.xml";
@@ -90,9 +97,14 @@ public class XMLBasedProductLine implements ProductLine {
     }
   }
 
-  private void readProductsFromFile() {
+  private void readProductFromFile() {
+    readProductsFromFile(new Date());
+  }
+
+  private void readProductsFromFile(Date date) {
+    System.out.println(dateFormat.format(date));
     products = new ArrayList<>();
-    getXMLFile();
+    getXMLFile(date);
     try {
       XMLInputFactory inputFactory = XMLInputFactory.newInstance();
       InputStream in = new FileInputStream(xmlFile);

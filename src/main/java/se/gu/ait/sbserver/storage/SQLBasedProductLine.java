@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.Date;
 
 /**
  * <p>An implementation of ProuctLine which reads products from the database.
@@ -19,19 +20,23 @@ public class SQLBasedProductLine implements ProductLine {
 
   // Prevent instantiation from outside this package
   SQLBasedProductLine() { }
-  
+
   public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
     if (products == null) {
       readProductsFromDatabase();
     }
     return products.stream().filter(predicate).collect(Collectors.toList());
   }
-  
+
   public List<Product> getAllProducts() {
     if (products == null) {
       readProductsFromDatabase();
     }
     return products;
+  }
+
+  public List<Product> getAllProducts(Date date){
+    return getAllProducts();
   }
 
   private void readProductsFromDatabase() {
@@ -67,5 +72,5 @@ public class SQLBasedProductLine implements ProductLine {
     } catch (SQLException sqle) {
       sqle.printStackTrace();
     }
-  }  
+  }
 }

@@ -10,6 +10,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 /**
  * This class is a Java program which fires up a
@@ -32,6 +35,10 @@ public class TestSwing {
    * For other computers, which do not have the capabilities
    * which we try to use here, nothing happens.
    */
+
+  static String datePattern = "yyyyMMdd";
+  static SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+
   static {
     try {
       // Ignore the lines below - it's a fix for Rikard's computer. Hell Dell!
@@ -46,11 +53,23 @@ public class TestSwing {
    * Java program.
    */
   public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
+    if (args.length == 0) {
+      SwingUtilities.invokeLater(new Runnable() {
         public void run() {
           GUI gui = new GUI(ProductLineFactory.getProductLine().getAllProducts());
         }
       });
+    } else {
+      SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          try {
+            GUI gui = new GUI(ProductLineFactory.getProductLine().getAllProducts(dateFormat.parse(args[0])));
+          } catch (ParseException e) {
+            e.printStackTrace();
+          }
+        }
+      });
+    }
   }
 }
 

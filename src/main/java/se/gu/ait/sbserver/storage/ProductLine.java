@@ -4,6 +4,7 @@ import se.gu.ait.sbserver.domain.Product;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.Date;
 
 /**
  * Represents a ProductLine of beverages. This interface provides methods
@@ -31,5 +32,7 @@ public interface ProductLine {
    * @return A List&lt;Product&gt; with all the Products in the product line.
    */
   public List<Product> getAllProducts();
+
+  public List<Product> getAllProducts(Date date);
 
 }
