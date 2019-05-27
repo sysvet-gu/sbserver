@@ -1,0 +1,1 @@
+mvn exec:java -Dexec.mainClass=se.gu.ait.sbserver.main.TestSwing -DProductLine=DB -Dexec.args="yyyyMMdd yyyyMMdd"
