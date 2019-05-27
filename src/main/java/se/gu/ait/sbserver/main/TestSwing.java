@@ -13,6 +13,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  * This class is a Java program which fires up a
@@ -59,7 +60,7 @@ public class TestSwing {
           GUI gui = new GUI(ProductLineFactory.getProductLine().getAllProducts());
         }
       });
-    } else {
+    } else if (args.length == 1){
       SwingUtilities.invokeLater(new Runnable() {
         public void run() {
           try {
@@ -67,6 +68,29 @@ public class TestSwing {
           } catch (ParseException e) {
             e.printStackTrace();
           }
+        }
+      });
+    } else {
+      SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          List<Product> newProducts = new ArrayList<>();
+          List<Product> oldProducts = new ArrayList<>();
+          List<Product> dupProducts = new ArrayList<>();
+          try {
+            oldProducts = ProductLineFactory.getProductLine().getAllProducts(dateFormat.parse(args[0]));
+            newProducts = ProductLineFactory.getProductLine().getAllProducts(dateFormat.parse(args[1]));
+          } catch (ParseException e) {
+            e.printStackTrace();
+          }
+          for (Product newProd : newProducts) {
+            for (Product oldProd : oldProducts) {
+              if (newProd.equals(oldProd)) {
+                dupProducts.add(newProd);
+              }
+            }
+          }
+          newProducts.removeAll(dupProducts);
+          GUI gui = new GUI(newProducts);
         }
       });
     }

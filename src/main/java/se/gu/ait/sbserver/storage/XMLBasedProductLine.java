@@ -21,6 +21,8 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+
 
 /**
  * <p>An implementation of ProuctLine which parses a local
@@ -41,7 +43,6 @@ public class XMLBasedProductLine implements ProductLine {
 
   static String datePattern = "yyyyMMdd";
   static SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
-  static String fromFile = "https://www.systembolaget.se/api/assortment/products/xml";
 
 
   static final String PRODUCT = "artikel";
@@ -55,6 +56,7 @@ public class XMLBasedProductLine implements ProductLine {
   static final String PRODUCT_GROUP = "Varugrupp";
   static final String TYPE = "Typ";
 
+  private String fromFile;
   private String xmlFile;
   private File tmpFile;
 
@@ -85,9 +87,26 @@ public class XMLBasedProductLine implements ProductLine {
     getXMLFile(new Date());
   }
 
+  private Date firstDate() {
+    Date date = new Date();
+    try {
+      date = dateFormat.parse("20180922");
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return date;
+  }
+
   private void getXMLFile(Date date) {
+    if (date.equals(new Date()) || date.after(new Date()) || date.before(firstDate())) {
+      fromFile = "https://www.systembolaget.se/api/assortment/products/xml";
+      date = new Date();
+    } else {
+      fromFile = "http://rameau.sandklef.com/systembolaget/" + dateFormat.format(date) + "/products.xml";
+    }
     xmlFile = "src/main/resources/systembolaget/" + dateFormat.format(date) + "/products.xml";
     tmpFile = new File(xmlFile);
+    System.out.println(dateFormat.format(date));
     if (!tmpFile.exists()) {
       try {
         FileUtils.copyURLToFile(new URL(fromFile), new File(xmlFile), 10000, 10000);
@@ -102,7 +121,6 @@ public class XMLBasedProductLine implements ProductLine {
   }
 
   private void readProductsFromFile(Date date) {
-    System.out.println(dateFormat.format(date));
     products = new ArrayList<>();
     getXMLFile(date);
     try {
