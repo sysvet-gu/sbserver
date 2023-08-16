@@ -1,6 +1,6 @@
-# Systembolagsserver
+# SBserver
 
-Systembolagsservern innehåller en maveniserad version av systembolagsservern ni arbetat med i TIG058.
+SBservern innehåller en maveniserad version av sbservern ni arbetat med i TIG058.
 
 Maven strukturerar källkoden på ett specifikt sätt, det är viktigt att hålla sig till strukturen för att programmet ska fungera.
 
